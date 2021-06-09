@@ -39,4 +39,3 @@ jobs:
         with:
             resourceGroupName: WTH31
             template: "./ARM-Templates/container-webapp-template.json"
-            parameters: storageAccountType=Standard_LRS
