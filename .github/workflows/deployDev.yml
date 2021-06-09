@@ -37,7 +37,6 @@ jobs:
       - name: Deploy Azure Resource Manager (ARM) Template
         uses: Azure/arm-deploy@v1
         with:
-            scope: resourcegroup
             subscriptionID: 6e905154-269f-4db5-b367-01288088e6f3
             resourceGroupName: WTH31
             template: "ARM-Templates/container-webapp-template.json"
