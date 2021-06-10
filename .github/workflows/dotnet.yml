@@ -34,7 +34,7 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal ./Application/tests/RazorPagesTestSample.Tests/RazorPagesTestSample.Tests.csproj
       
-  dockerBuild&Push:
+  dockerBuildPush:
     
     runs-on: ubuntu-latest
 
