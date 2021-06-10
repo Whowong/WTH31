@@ -2,7 +2,7 @@ name: .NET CI
 
 env:
   registryName: AHCSAdevopsreg.azurecr.io
-  repositoryName: wth/dotnetcoreapp
+  repositoryName: wth/dotnetcoreappTest
   dockerFolderPath: ./Application/src/RazorPagesTestSample
   tag: ${{github.run_number}}
   
