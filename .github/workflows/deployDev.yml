@@ -55,4 +55,4 @@ jobs:
         uses: Azure/webapps-deploy@v2
         with:
             app-name: AHCSAdevops-dev
-            images: ahcsadevopsreg.azurecr.io/wth/dotnetcoreapp:11
+            images: ahcsadevopsreg.azurecr.io/wth/dotnetcoreapp:15
