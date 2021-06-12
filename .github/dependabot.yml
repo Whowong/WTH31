@@ -6,13 +6,13 @@
 version: 2
 updates:
   - package-ecosystem: "nuget" # See documentation for possible values
-    directory: "/Application" # Location of package manifests
+    directory: "/Application/src/RazorPagesTestSample" # Location of package manifests
     schedule:
       interval: "daily"
   # Enable version updates for Docker
   - package-ecosystem: "docker"
     # Look for a `Dockerfile` in the `root` directory
-    directory: "/Application"
+    directory: "/Application/src/RazorPagesTestSample"
     # Check for updates once a week
     schedule:
       interval: "weekly"
