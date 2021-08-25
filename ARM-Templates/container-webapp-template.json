@@ -23,7 +23,7 @@
             "type": "String"
         },
         "registryName": {
-            "defaultValue": "AHCSAdevopsreg",
+            "defaultValue": "AHCSAdevopsreg-dev",
             "type": "String"
         },
         "imageName": {
