@@ -3,11 +3,11 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "webAppName": {
-            "defaultValue": "AHCSAdevops-Dev",
+            "defaultValue": "AHCSAdevopswth31-Dev",
             "type": "String"
         },
         "hostingPlanName": {
-            "defaultValue": "AHCSAdevops-asp",
+            "defaultValue": "AHCSAdevopswth31-asp",
             "type": "String"
         },
         "appInsightsLocation": {
@@ -15,7 +15,7 @@
             "type": "String"
         },
         "appInsightsName": {
-            "defaultValue": "AHCSAdevops-ai",
+            "defaultValue": "AHCSAdevopswth31-ai",
             "type": "String"
         },        
         "sku": {
@@ -23,7 +23,7 @@
             "type": "String"
         },
         "registryName": {
-            "defaultValue": "AHCSAdevopsreg-dev",
+            "defaultValue": "AHCSAdevopsregwth31",
             "type": "String"
         },
         "imageName": {
