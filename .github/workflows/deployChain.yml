@@ -48,7 +48,7 @@ jobs:
             app-name: AHCSAdevopswth31-${{ secrets.ENVIRONMENT }}
             images: ahcsadevopsregwth31.azurecr.io/wth/dotnetcoreapp:18
             
-  build-TestEnv:
+  buildDeploy-TestEnv:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     needs: buildDeploy-DevEnv
@@ -75,21 +75,11 @@ jobs:
             resourceGroupName: WTH31
             template: "ARM-Templates/container-webapp-template.json"
             parameters: webAppName=AHCSAdevopswth31-${{ secrets.ENVIRONMENT }}
-
-  deploy-Test:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
-    environment: Test
-    needs: build-TestEnv
-    steps:
-      - name: Azure Login
-        uses: Azure/login@v1
-        with:
-          # Paste output of `az ad sp create-for-rbac` as value of secret variable: AZURE_CREDENTIALS
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-          
       - name: Deploy Azure WebApp
         uses: Azure/webapps-deploy@v2
         with:
             app-name: AHCSAdevopswth31-${{ secrets.ENVIRONMENT }}
             images: ahcsadevopsregwth31.azurecr.io/wth/dotnetcoreapp:18
+
+
+
