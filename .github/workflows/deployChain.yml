@@ -58,7 +58,7 @@ jobs:
         uses: Azure/webapps-deploy@v2
         with:
             app-name: AHCSAdevopswth31-${{ secrets.ENVIRONMENT }}
-            images: ahcsadevopsreg.azurecr.io/wth/dotnetcoreapp:18
+            images: ahcsadevopsregwth31.azurecr.io/wth/dotnetcoreapp:18
             
   build-TestEnv:
     # The type of runner that the job will run on
@@ -104,4 +104,4 @@ jobs:
         uses: Azure/webapps-deploy@v2
         with:
             app-name: AHCSAdevopswth31-${{ secrets.ENVIRONMENT }}
-            images: ahcsadevopsreg.azurecr.io/wth/dotnetcoreapp:18
+            images: ahcsadevopsregwth31.azurecr.io/wth/dotnetcoreapp:18
