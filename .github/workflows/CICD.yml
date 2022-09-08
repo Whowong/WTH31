@@ -19,39 +19,12 @@ permissions:
       contents: read
       
 jobs:
-  build:
-
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v2
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 3.1
-    
-    - name: Restore dependencies
-      run: dotnet restore ./Application/src/RazorPagesTestSample/RazorPagesTestSample.csproj
-    - name: Build
-      run: dotnet build --no-restore ./Application/src/RazorPagesTestSample/RazorPagesTestSample.csproj
-    - name: Test
-      run: dotnet test --no-build --verbosity normal ./Application/tests/RazorPagesTestSample.Tests/RazorPagesTestSample.Tests.csproj
-      
   dockerBuildPush:
     
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v2
-    
-    # Logging in to Azure with OIDC
-    - name: 'Az CLI login'
-      uses: azure/login@v1
-      with:
-        client-id: ${{ secrets.AZURE_CLIENT_ID }}
-        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-        enable-AzPSSession: true 
         
     - name: Docker Login
       # You may pin to the exact commit or the version.
@@ -72,3 +45,70 @@ jobs:
       
     - name: Docker Push
       run: docker push $registryName/$repositoryName:$tag
+      
+  buildDeploy-DevEnv:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    needs: dockerBuildPush
+    environment: Dev
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      # Logging in to Azure with OIDC
+      - name: 'Az CLI login'
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          enable-AzPSSession: true 
+    
+      - name: Deploy Azure Resource Manager (ARM) Template
+        uses: Azure/arm-deploy@main
+        with:
+            subscriptionID: 6e905154-269f-4db5-b367-01288088e6f3
+            resourceGroupName: WTH31
+            template: "ARM-Templates/container-webapp-template.json"
+            parameters: webAppName=AHCSAdevopswth31-${{ secrets.ENVIRONMENT }}
+            
+      - name: Deploy Azure WebApp
+        uses: Azure/webapps-deploy@v2
+        with:
+            app-name: AHCSAdevopswth31-${{ secrets.ENVIRONMENT }}
+            images: ${{ env.registryName }}/wth/dotnetcoreapp:${{ env.tag }}
+            
+  buildDeploy-TestEnv:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    needs: buildDeploy-DevEnv
+    environment: Test
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      # Logging in to Azure with OIDC
+      - name: 'Az CLI login'
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          enable-AzPSSession: true 
+    
+      - name: Deploy Azure Resource Manager (ARM) Template
+        uses: Azure/arm-deploy@main
+        with:
+            subscriptionID: 6e905154-269f-4db5-b367-01288088e6f3
+            resourceGroupName: WTH31
+            template: "ARM-Templates/container-webapp-template.json"
+            parameters: webAppName=AHCSAdevopswth31-${{ secrets.ENVIRONMENT }}
+      - name: Deploy Azure WebApp
+        uses: Azure/webapps-deploy@v2
+        with:
+            app-name: AHCSAdevopswth31-${{ secrets.ENVIRONMENT }}
+            images: ${{ env.registryName }}/wth/dotnetcoreapp:${{ env.tag }}
+
+
