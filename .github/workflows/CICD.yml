@@ -71,7 +71,7 @@ jobs:
             subscriptionID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
             resourceGroupName: WTH31
             template: "ARM-Templates/container-webapp-template.json"
-            parameters: webAppName=AHCSAdevopswth31-${{ secrets.ENVIRONMENT }}
+            parameters: webAppName=AHCSAdevops-wth31-${{ secrets.ENVIRONMENT }}
             
       - name: Deploy Azure WebApp
         uses: Azure/webapps-deploy@v2
@@ -104,7 +104,7 @@ jobs:
             subscriptionID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
             resourceGroupName: WTH31
             template: "ARM-Templates/container-webapp-template.json"
-            parameters: webAppName=AHCSAdevopswth31-${{ secrets.ENVIRONMENT }}
+            parameters: webAppName=AHCSAdevops-wth31-${{ secrets.ENVIRONMENT }}
       - name: Deploy Azure WebApp
         uses: Azure/webapps-deploy@v2
         with:
